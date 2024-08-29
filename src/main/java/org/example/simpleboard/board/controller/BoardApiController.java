@@ -6,6 +6,7 @@ import org.example.simpleboard.board.db.BoardEntity;
 import org.example.simpleboard.board.model.BoardRequest;
 import org.example.simpleboard.board.service.BoardService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @PostMapping("")
-    public BoardEntity create(@Valid BoardRequest boardRequest) {
+    public BoardEntity create(@Valid @RequestBody BoardRequest boardRequest) {
 
         return boardService.create(boardRequest);
 
