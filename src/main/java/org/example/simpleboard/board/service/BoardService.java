@@ -3,6 +3,7 @@ package org.example.simpleboard.board.service;
 import lombok.RequiredArgsConstructor;
 import org.example.simpleboard.board.db.BoardEntity;
 import org.example.simpleboard.board.db.BoardRepository;
+import org.example.simpleboard.board.model.BoardDto;
 import org.example.simpleboard.board.model.BoardRequest;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,20 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardConverter boardConverter;
 
-    public BoardEntity create(BoardRequest boardRequest) {
+    public BoardDto create(BoardRequest boardRequest) {
         var entity = BoardEntity.builder()
                 .boardName(boardRequest.getBoardName())
                 .status("REGISTERED")
                 .build();
 
-        return boardRepository.save(entity);
+        var saveEntity =  boardRepository.save(entity);
+        return boardConverter.toDto(saveEntity);
+    }
+
+    public BoardDto view(Long id) {
+        var entity = boardRepository.findById(id).get();
+        return boardConverter.toDto(entity);
     }
 }
