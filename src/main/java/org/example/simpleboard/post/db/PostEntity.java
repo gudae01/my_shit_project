@@ -42,6 +42,7 @@ public class PostEntity {
 
     private LocalDateTime postedAt;
 
-    @Transient
+    @OneToMany(mappedBy = "post")
+    @Builder.Default
     private List<ReplyEntity> replyList = List.of();
 }
